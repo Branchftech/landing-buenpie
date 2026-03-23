@@ -12,7 +12,7 @@
 
     <style>
         :root{
-            --bg: #0b1220;
+            --bg: #ffffff;
             --card: rgba(255,255,255,.06);
             --card2: rgba(255,255,255,.10);
             --text: rgba(255,255,255,.92);
@@ -32,7 +32,7 @@
         .container{max-width:1180px;margin:0 auto;padding:0 20px}
 
         .custom-navbar {
-            background: #EDEDED;
+            background:rgb(255, 255, 255);
             padding: 20px 0;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
@@ -46,7 +46,7 @@
             margin: 0 auto;
             padding: 0 40px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: space-between;
         }
 
@@ -57,6 +57,7 @@
         .navbar-menu {
             display: flex;
             gap: 60px;
+            align-items: flex-end;
         }
 
         .nav-link {
@@ -244,33 +245,37 @@
         .help{color:var(--muted);font-size:13px;line-height:1.45}
 
       
-        /* Floating buttons */
+        /* Floating buttons (un solo panel) */
         .float-wrap{
             position:fixed;right:16px;bottom:16px;z-index:70;
-            display:flex;flex-direction:column;gap:10px;
-        }
-        .float-btn{
-            width:52px;height:52px;border-radius:16px;
-            display:flex;align-items:center;justify-content:center;
+            display:flex;flex-direction:column;align-items:center;gap:4px;
+            padding:8px 6px;
+            min-width:52px;
+            border-radius:16px;
             box-shadow: var(--shadow);
             border:1px solid rgba(255,255,255,.14);
-            background: rgba(255,255,255,.08);
+            background: white;
             backdrop-filter: blur(12px);
+            outline: 2px solid rgba(255,255,255,.1);
         }
-        .float-btn:hover{background: rgba(255,255,255,.12)}
+        .float-btn{
+            width:44px;height:44px;border-radius:12px;
+            display:flex;align-items:center;justify-content:center;
+            flex-shrink:0;
+            text-decoration:none;
+            transition: background .2s ease;
+        }
+        .float-btn:hover{background: rgba(255,255,255,.14)}
         .float-btn.call{
-            outline: 2px solid rgba(71,167,255,.18);
             color: #47a7ff;
+            border-bottom:1px solid rgba(255,255,255,.18);
+            padding-bottom:6px;
         }
-        .float-btn.call svg{
-            fill: #47a7ff;
+        .float-btn img{
+            width:24px;height:24px;display:block;object-fit:contain;
         }
         .float-btn.wa{
-            outline: 2px solid rgba(51,230,178,.16);
             color: #25D366;
-        }
-        .float-btn.wa svg{
-            fill: #25D366;
         }
 
         /* Chat widget */
@@ -310,7 +315,7 @@
             font-size:13px;
         }
         .beneficios-section {
-            background: #EDEDED;
+            background: rgb(255, 255, 255);
             padding: 80px 0;
             text-align: center;
         }
@@ -331,9 +336,11 @@
             margin-bottom: 80px;
         }
 
-        .beneficio-svg {
+        .beneficio-svg,
+        .sucursal-svg {
             width: 220px;
             height: 220px;
+            display: block;
         }
 
         .ubicacion-text h3 {
@@ -352,19 +359,8 @@
             flex-wrap: wrap;
         }
 
-        .sucursal-circle {
-            width: 220px;
-            height: 220px;
-            background: #3F6287;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 22px;
-            font-style: italic;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
+        .sucursales-grid .sucursal-item {
+            flex: 0 0 auto;
         }
 
         .casos-reales-grid {
@@ -523,7 +519,7 @@
             justify-content: center;
         }
         .contact-section {
-            background: #EDEDED;
+            background: rgb(255, 255, 255);
             padding: 80px 20px;
             display: flex;
             justify-content: center;
@@ -751,7 +747,7 @@
         }
 
         .doctor-section {
-            background: #EDEDED;
+            background: rgb(255, 255, 255);
             padding: 80px 20px;
             display: flex;
             justify-content: center;
@@ -923,13 +919,11 @@
 
             <!-- Logo -->
             <div class="navbar-left">
-                <img src="{{ asset('images/logo-buenpie.png') }}" alt="Buen Pie Logo">
+                <img src="{{ asset('images/logo.png') }}" alt="Buen Pie Logo">
             </div>
 
             <!-- Menu -->
-            <nav class="navbar-menu">
-                <a href="#home" class="nav-link active">HOME</a>
-            </nav>
+           
 
             <!-- Chat Button -->
             <div class="navbar-right">
@@ -952,19 +946,23 @@
             <div class="carousel-track">
 
                 <div class="carousel-slide active">
-                    <img src="{{ asset('images/slide1.jpg') }}" alt="">
+                    <img src="{{ asset('images/slide1.png') }}" alt="">
                 </div>
 
                 <div class="carousel-slide">
-                    <img src="{{ asset('images/slide2.jpg') }}" alt="">
+                    <img src="{{ asset('images/slide2.png') }}" alt="">
                 </div>
 
                 <div class="carousel-slide">
-                    <img src="{{ asset('images/slide3.jpg') }}" alt="">
+                    <img src="{{ asset('images/slide3.png') }}" alt="">
                 </div>
 
                 <div class="carousel-slide">
-                    <img src="{{ asset('images/slide4.jpg') }}" alt="">
+                    <img src="{{ asset('images/slide4.png') }}" alt="">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="{{ asset('images/slide5.png') }}" alt="">
                 </div>
 
             </div>
@@ -977,10 +975,10 @@
 
         <!-- Miniaturas -->
         <div class="carousel-thumbs">
-            <img src="{{ asset('images/slide1.jpg') }}" data-index="0" class="thumb active">
-            <img src="{{ asset('images/slide2.jpg') }}" data-index="1" class="thumb">
-            <img src="{{ asset('images/slide3.jpg') }}" data-index="2" class="thumb">
-            <img src="{{ asset('images/slide4.jpg') }}" data-index="3" class="thumb">
+            <img src="{{ asset('images/slide1.png') }}" data-index="0" class="thumb active">
+            <img src="{{ asset('images/slide2.png') }}" data-index="1" class="thumb">
+            <img src="{{ asset('images/slide3.png') }}" data-index="2" class="thumb">
+            <img src="{{ asset('images/slide4.png') }}" data-index="3" class="thumb">
         </div>
 
     </section>
@@ -990,7 +988,7 @@
     <div class="doctor-container">
 
         <!-- Imagen completa -->
-        <img src="{{ asset('images/doctor-section.jpg') }}" alt="Brindamos bienestar para tus pies">
+        <img src="{{ asset('images/doctor-section.png') }}" alt="Brindamos bienestar para tus pies">
 
     </div>
 
@@ -1005,22 +1003,22 @@
         <div class="casos-reales-grid">
             <!-- Caso Real 1 -->
             <div class="caso-real-item">
-                <img src="{{ asset('images/caso-real-1.jpg') }}" alt="Caso Real 1">
+                <img src="{{ asset('images/casoreal1.png') }}" alt="Caso Real 1">
             </div>
 
             <!-- Caso Real 2 -->
             <div class="caso-real-item">
-                <img src="{{ asset('images/caso-real-2.jpg') }}" alt="Caso Real 2">
+                <img src="{{ asset('images/casoreal2.png') }}" alt="Caso Real 2">
             </div>
 
             <!-- Caso Real 3 -->
             <div class="caso-real-item">
-                <img src="{{ asset('images/caso-real-3.jpg') }}" alt="Caso Real 3">
+                <img src="{{ asset('images/casoreal3.png') }}" alt="Caso Real 3">
             </div>
 
             <!-- Caso Real 4 -->
             <div class="caso-real-item">
-                <img src="{{ asset('images/caso-real-4.jpg') }}" alt="Caso Real 4">
+                <img src="{{ asset('images/casoreal4.png') }}" alt="Caso Real 4">
             </div>
 
         </div>
@@ -1037,15 +1035,17 @@
 
         <!-- 1 -->
         <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg">
+            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Elimina callosidades">
                 <defs>
+                    <clipPath id="benefitClip1">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
                     <path id="circlePath1"
                         d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
                 </defs>
-
-                <circle cx="110" cy="110" r="75" fill="#8E4A97" />
-
-                <text font-family="Poppins" font-size="14" fill="#4a4a4a" font-weight="600">
+                <image href="{{ asset('images/eliminacallosidades.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#benefitClip1)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
                     <textPath href="#circlePath1" startOffset="20%" text-anchor="middle">
                         Elimina callosidades
                     </textPath>
@@ -1055,15 +1055,17 @@
 
         <!-- 2 -->
         <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg">
+            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Promueve la circulación sanguínea">
                 <defs>
+                    <clipPath id="benefitClip2">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
                     <path id="circlePath2"
                         d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
                 </defs>
-
-                <circle cx="110" cy="110" r="75" fill="#8E4A97" />
-
-                <text font-family="Poppins" font-size="14" fill="#4a4a4a" font-weight="600">
+                <image href="{{ asset('images/promuevecirculacion.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#benefitClip2)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
                     <textPath href="#circlePath2" startOffset="20%" text-anchor="middle">
                         Promueve la circulación sanguínea
                     </textPath>
@@ -1073,15 +1075,17 @@
 
         <!-- 3 -->
         <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg">
+            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Recupera tu bienestar">
                 <defs>
+                    <clipPath id="benefitClip3">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
                     <path id="circlePath3"
                         d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
                 </defs>
-
-                <circle cx="110" cy="110" r="75" fill="#8E4A97" />
-
-                <text font-family="Poppins" font-size="14" fill="#4a4a4a" font-weight="600">
+                <image href="{{ asset('images/recuperabienestar.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#benefitClip3)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
                     <textPath href="#circlePath3" startOffset="20%" text-anchor="middle">
                         Recupera tu bienestar
                     </textPath>
@@ -1091,15 +1095,17 @@
 
         <!-- 4 -->
         <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg">
+            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Mejora tu apariencia">
                 <defs>
+                    <clipPath id="benefitClip4">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
                     <path id="circlePath4"
                         d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
                 </defs>
-
-                <circle cx="110" cy="110" r="75" fill="#8E4A97" />
-
-                <text font-family="Poppins" font-size="14" fill="#4a4a4a" font-weight="600">
+                <image href="{{ asset('images/mejoraapariencia.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#benefitClip4)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
                     <textPath href="#circlePath4" startOffset="20%" text-anchor="middle">
                         Mejora tu apariencia
                     </textPath>
@@ -1121,10 +1127,78 @@
     </div>
 
     <div class="sucursales-grid">
-        <div class="sucursal-circle">Insurgentes</div>
-        <div class="sucursal-circle">Otay</div>
-        <div class="sucursal-circle">Centro</div>
-        <div class="sucursal-circle">Playas</div>
+        <div class="sucursal-item">
+            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Insurgentes">
+                <defs>
+                    <clipPath id="sucursalClip1">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
+                    <path id="sucursalPath1"
+                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                </defs>
+                <image href="{{ asset('images/insurgentes.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip1)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
+                    <textPath href="#sucursalPath1" startOffset="20%" text-anchor="middle">
+                        Insurgentes
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+        <div class="sucursal-item">
+            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Otay">
+                <defs>
+                    <clipPath id="sucursalClip2">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
+                    <path id="sucursalPath2"
+                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                </defs>
+                <image href="{{ asset('images/otay.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip2)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
+                    <textPath href="#sucursalPath2" startOffset="20%" text-anchor="middle">
+                        Otay
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+        <div class="sucursal-item">
+            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Centro">
+                <defs>
+                    <clipPath id="sucursalClip3">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
+                    <path id="sucursalPath3"
+                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                </defs>
+                <image href="{{ asset('images/centro.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip3)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
+                    <textPath href="#sucursalPath3" startOffset="20%" text-anchor="middle">
+                        Centro
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+        <div class="sucursal-item">
+            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Playas">
+                <defs>
+                    <clipPath id="sucursalClip4">
+                        <circle cx="110" cy="110" r="75" />
+                    </clipPath>
+                    <path id="sucursalPath4"
+                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                </defs>
+                <image href="{{ asset('images/playas.png') }}" x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip4)" preserveAspectRatio="xMidYMid slice" />
+                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
+                    <textPath href="#sucursalPath4" startOffset="20%" text-anchor="middle">
+                        Playas
+                    </textPath>
+                </text>
+            </svg>
+        </div>
     </div>
 
 </section>
@@ -1282,7 +1356,7 @@
     <!-- Políticas -->
     <div class="footer-bottom">
         <div class="footer-bottom-logo">
-            <img src="{{ asset('images/logo-buenpie.png') }}" alt="Buen Pie Logo">
+            <img src="{{ asset('images/logo.png') }}" alt="Buen Pie Logo">
         </div>
         <div class="footer-bottom-links">
             <span>POLÍTICA DE PRIVACIDAD</span>
@@ -1297,14 +1371,10 @@
     <!-- Floating buttons -->
     <div class="float-wrap" aria-label="Accesos rápidos">
         <a class="float-btn call" href="tel:+{{ $contact['phone_link'] }}" title="Llámanos" aria-label="Llámanos">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-            </svg>
+            <img src="{{ asset('images/llamada.png') }}" alt="" width="24" height="24">
         </a>
         <a class="float-btn wa" href="{{ $contact['whatsapp_link'] }}" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-            </svg>
+            <img src="{{ asset('images/whatsapp.png') }}" alt="" width="24" height="24">
         </a>
     </div>
 
