@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactFormSubmitted;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class LandingController extends Controller
 {
@@ -32,7 +36,7 @@ class LandingController extends Controller
         return view('landing', compact('branches', 'contact'));
     }
 
-    public function submit(Request $request)
+    public function submit(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'nombre'   => ['required','string','max:120'],
@@ -49,9 +53,37 @@ class LandingController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // En esta versión lo guardamos en sesión (sin DB).
-        // Si querés, lo conecto a DB + envío de email.
-        return back()->with('ok', '¡Gracias! Recibimos tu consulta. Te contactaremos a la brevedad.')
-                     ->withInput([]);
+        $data = array_merge([
+            'nombre' => '',
+            'correo' => '',
+            'telefono' => '',
+            'opcion' => '',
+            'motivo' => null,
+            'mensaje' => null,
+        ], $validator->validated());
+
+        $motivoPorOpcion = [
+            'Solicitar información' => 'Solicitar información:',
+            'Agendar cita' => 'Agendar cita:',
+            'Consultar promociones' => 'Consultar promociones:',
+            'Otros' => 'Otros:',
+        ];
+        $data['motivo'] = $motivoPorOpcion[$data['opcion']] ?? $data['opcion'];
+
+        try {
+            Mail::to(config('mail.contact_to.address', 'piotroskiangeles@gmail.com'))
+                ->send(new ContactFormSubmitted($data));
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withErrors(['contacto' => 'No se pudo enviar el correo en este momento. Intenta nuevamente.'])
+                ->withInput();
+        }
+
+        return back()->with(
+            'ok',
+            'Tu consulta ha sido enviada correctamente. Nos pondremos en contacto contigo a la brevedad.'
+        );
     }
 }

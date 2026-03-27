@@ -6,11 +6,18 @@
     <title>El Buen Pie | Clínica especializada en láser en Tijuana</title>
     <meta name="description" content="Clínica No. 1 especializada en láser en Tijuana. Tratamiento láser 4K contra la onicomicosis. Pedicure médico frecuente. Sucursales en 4 puntos de la ciudad." />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;1,500;1,600&display=swap" rel="stylesheet">
-
     <style>
+        {{-- Solo carga la fuente si el archivo existe en public/fonts/ (evita 404 en consola) --}}
+        @if (file_exists(public_path('fonts/BrandonGrotesque-Regular.otf')))
+        @font-face {
+            font-family: 'BrandonGrotesque';
+            src: url('{{ asset("fonts/BrandonGrotesque-Regular.otf") }}') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @endif
+
         :root{
             --bg: #ffffff;
             --card: rgba(255,255,255,.06);
@@ -24,10 +31,14 @@
             --radius: 18px;
         }
         *{box-sizing:border-box}
-        html,body{margin:0;padding:0;background: radial-gradient(1200px 800px at 20% 0%, rgba(71,167,255,.18), transparent 55%),
-                                         radial-gradient(900px 700px at 85% 10%, rgba(51,230,178,.16), transparent 50%),
-                                         var(--bg); color:var(--text);
-                 font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";}
+        html,body{
+            margin:0;padding:0;
+            background: radial-gradient(1200px 800px at 20% 0%, rgba(71,167,255,.18), transparent 55%),
+                        radial-gradient(900px 700px at 85% 10%, rgba(51,230,178,.16), transparent 50%),
+                        var(--bg);
+            color:var(--text);
+            font-family: 'BrandonGrotesque', sans-serif;
+        }
         a{color:inherit;text-decoration:none}
         .container{max-width:1180px;margin:0 auto;padding:0 20px}
 
@@ -61,7 +72,7 @@
         }
 
         .nav-link {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
             font-size: 26px;
             font-weight: 600;
             color: #4A4A4A;
@@ -83,7 +94,7 @@
         .chat-button {
             background: #5AA031;
             color: white;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
             font-size: 24px;
             font-weight: 600;
             padding: 14px 30px;
@@ -325,42 +336,41 @@
             font-weight: 700;
             color: #4a4a4a;
             margin-bottom: 60px;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
         }
 
         .beneficios-grid {
             display: flex;
             justify-content: center;
-            gap: 60px;
+            gap: 18px;
             flex-wrap: wrap;
             margin-bottom: 80px;
         }
 
-        .beneficio-svg,
-        .sucursal-svg {
-            width: 220px;
-            height: 220px;
+        .beneficio-item,
+        .sucursal-item {
+            overflow: visible;
+            padding: 10px;
+            box-sizing: content-box;
+        }
+
+        .beneficios-grid .beneficio-item,
+        .beneficios-grid .sucursal-item {
+            padding: 4px;
+        }
+
+        .beneficio-svg {
+            width: 300px;
+            height: 300px;
             display: block;
+            overflow: visible;
         }
 
-        .ubicacion-text h3 {
-            font-size: 36px;
-            color: #4a4a4a;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 60px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .sucursales-grid {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-        }
-
-        .sucursales-grid .sucursal-item {
-            flex: 0 0 auto;
+        .beneficios-grid .beneficio-item .beneficio-svg {
+            width: min(515px, 100%);
+            max-width: 515px;
+            height: auto;
+            aspect-ratio: 1;
         }
 
         .casos-reales-grid {
@@ -396,13 +406,14 @@
             background: #EDEDED;
             color: #4A4A4A;
             padding-top: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
         }
 
         .footer-top-bar {
             display: flex;
             height: 8px;
-            width: 100%;
+            width: 50%;
+            margin: 0 auto;
         }
 
         .bar-blue {
@@ -541,7 +552,7 @@
             font-weight: 600;
             color: #3F6287;
             margin-bottom: 40px;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
         }
 
         .contact-row {
@@ -561,7 +572,7 @@
             font-size: 20px;
             font-weight: 500;
             color: #3F6287;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
         }
 
         .contact-input {
@@ -710,9 +721,21 @@
             height: 45px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 22px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .carousel-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
         }
 
         .carousel-btn.prev { left: 15px; }
@@ -779,7 +802,7 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
             font-weight: 600;
             box-shadow: 0 5px 12px rgba(0,0,0,0.25);
             transition: 0.3s ease;
@@ -808,7 +831,7 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'BrandonGrotesque', sans-serif;
             font-weight: 600;
             box-shadow: 0 6px 16px rgba(0,0,0,0.25);
             transition: 0.3s ease;
@@ -867,8 +890,19 @@
         }
         @media (max-width: 992px) {
             .navbar-container {
-                flex-direction: column;
-                gap: 20px;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 0 16px 0 20px;
+            }
+            .navbar-left {
+                flex: 0 0 auto;
+            }
+            .navbar-right {
+                flex: 0 0 auto;
+                margin-left: auto;
             }
             .navbar-menu {
                 gap: 30px;
@@ -968,8 +1002,12 @@
             </div>
 
             <!-- Flechas -->
-            <button class="carousel-btn prev">&#10094;</button>
-            <button class="carousel-btn next">&#10095;</button>
+            <button type="button" class="carousel-btn prev" aria-label="Anterior">
+                <img src="{{ asset('images/izq.png') }}" alt="">
+            </button>
+            <button type="button" class="carousel-btn next" aria-label="Siguiente">
+                <img src="{{ asset('images/der.png') }}" alt="">
+            </button>
 
         </div>
 
@@ -1033,167 +1071,191 @@
 
     <div class="beneficios-grid">
 
-        <!-- 1 -->
-        <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Elimina callosidades">
-                <defs>
-                    <clipPath id="benefitClip1">
-                        <circle cx="110" cy="110" r="75" />
-                    </clipPath>
-                    <path id="circlePath1"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
-                </defs>
-                <image href="{{ asset('images/eliminacallosidades.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#benefitClip1)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#circlePath1" startOffset="20%" text-anchor="middle">
-                        Elimina callosidades
-                    </textPath>
-                </text>
-            </svg>
-        </div>
+    <!-- Beneficios: imagen circular (r=75); texto en corona concéntrica (r=80), encima en el orden SVG -->
+    <!-- 1 -->
+    <div class="beneficio-item">
+        <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg">
+            <defs>
+                <clipPath id="clip1">
+                    <circle cx="110" cy="110" r="75" />
+                </clipPath>
+                <!-- Mismo centro (110,110) que el círculo de la foto; radio 80 = anillo justo fuera del borde (75) -->
+                <path id="arc1" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
+            </defs>
 
-        <!-- 2 -->
-        <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Promueve la circulación sanguínea">
-                <defs>
-                    <clipPath id="benefitClip2">
-                        <circle cx="110" cy="110" r="75" />
-                    </clipPath>
-                    <path id="circlePath2"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
-                </defs>
-                <image href="{{ asset('images/promuevecirculacion.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#benefitClip2)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#circlePath2" startOffset="20%" text-anchor="middle">
-                        Promueve la circulación sanguínea
-                    </textPath>
-                </text>
-            </svg>
-        </div>
+            <image href="{{ asset('images/eliminacallosidades.png') }}"
+                x="35" y="35" width="150" height="150"
+                clip-path="url(#clip1)" />
 
-        <!-- 3 -->
-        <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Recupera tu bienestar">
-                <defs>
-                    <clipPath id="benefitClip3">
-                        <circle cx="110" cy="110" r="75" />
-                    </clipPath>
-                    <path id="circlePath3"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
-                </defs>
-                <image href="{{ asset('images/recuperabienestar.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#benefitClip3)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#circlePath3" startOffset="20%" text-anchor="middle">
-                        Recupera tu bienestar
-                    </textPath>
-                </text>
-            </svg>
-        </div>
-
-        <!-- 4 -->
-        <div class="beneficio-item">
-            <svg viewBox="0 0 220 220" class="beneficio-svg" role="img" aria-label="Mejora tu apariencia">
-                <defs>
-                    <clipPath id="benefitClip4">
-                        <circle cx="110" cy="110" r="75" />
-                    </clipPath>
-                    <path id="circlePath4"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
-                </defs>
-                <image href="{{ asset('images/mejoraapariencia.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#benefitClip4)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#circlePath4" startOffset="20%" text-anchor="middle">
-                        Mejora tu apariencia
-                    </textPath>
-                </text>
-            </svg>
-        </div>
-
+            <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                  font-size="14" fill="#4a4a4a" font-weight="700">
+                <textPath href="#arc1" startOffset="25%" text-anchor="middle">
+                    Elimina callosidades
+                </textPath>
+            </text>
+        </svg>
     </div>
 
+    <!-- 2 -->
+    <div class="beneficio-item">
+        <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg">
+            <defs>
+                <clipPath id="clip2">
+                    <circle cx="110" cy="110" r="75" />
+                </clipPath>
+                <path id="arc2" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
+            </defs>
 
+            <image href="{{ asset('images/promuevecirculacion.png') }}"
+                x="35" y="35" width="150" height="150"
+                clip-path="url(#clip2)" />
+
+            <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                  font-size="14" fill="#4a4a4a" font-weight="700">
+                <textPath href="#arc2" startOffset="25%" text-anchor="middle">
+                    Promueve la circulación sanguínea
+                </textPath>
+            </text>
+        </svg>
+    </div>
+
+    <!-- 3 -->
+    <div class="beneficio-item">
+        <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg">
+            <defs>
+                <clipPath id="clip3">
+                    <circle cx="110" cy="110" r="75" />
+                </clipPath>
+                <path id="arc3" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
+            </defs>
+
+            <image href="{{ asset('images/recuperabienestar.png') }}"
+                x="35" y="35" width="150" height="150"
+                clip-path="url(#clip3)" />
+
+            <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                  font-size="14" fill="#4a4a4a" font-weight="700">
+                <textPath href="#arc3" startOffset="25%" text-anchor="middle">
+                    Recupera tu bienestar
+                </textPath>
+            </text>
+        </svg>
+    </div>
+
+    <!-- 4 -->
+    <div class="beneficio-item">
+        <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg">
+            <defs>
+                <clipPath id="clip4">
+                    <circle cx="110" cy="110" r="75" />
+                </clipPath>
+                <path id="arc4" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
+            </defs>
+
+            <image href="{{ asset('images/mejoraapariencia.png') }}"
+                x="35" y="35" width="150" height="150"
+                clip-path="url(#clip4)" />
+
+            <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                  font-size="14" fill="#4a4a4a" font-weight="700">
+                <textPath href="#arc4" startOffset="25%" text-anchor="middle">
+                    Mejora tu apariencia
+                </textPath>
+            </text>
+        </svg>
+    </div>
+
+</div>
+
+    
     <!-- SEGUNDA PARTE -->
 
-    <div class="ubicacion-text">
-        <h3>
-            Ubicados estratégicamente en 4 puntos<br>
-            de la ciudad para tu comodidad.<br>
-            Encuentra la sucursal más cercana.
-        </h3>
-    </div>
+    <h2 class="beneficios-title">
+        Ubicados estratégicamente en 4 puntos<br>
+        de la ciudad para tu comodidad.<br>
+        Encuentra la sucursal más cercana.
+    </h2>
 
-    <div class="sucursales-grid">
+    <div class="beneficios-grid">
         <div class="sucursal-item">
-            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Insurgentes">
+            <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg" role="img" aria-label="Sucursal Insurgentes">
                 <defs>
                     <clipPath id="sucursalClip1">
                         <circle cx="110" cy="110" r="75" />
                     </clipPath>
-                    <path id="sucursalPath1"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                    <path id="sucursalPath1" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
                 </defs>
-                <image href="{{ asset('images/insurgentes.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#sucursalClip1)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#sucursalPath1" startOffset="20%" text-anchor="middle">
+
+                <image href="{{ asset('images/insurgentes.png') }}"
+                    x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip1)" />
+
+                <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                      font-size="14" fill="#4a4a4a" font-weight="700">
+                    <textPath href="#sucursalPath1" startOffset="25%" text-anchor="middle">
                         Insurgentes
                     </textPath>
                 </text>
             </svg>
         </div>
         <div class="sucursal-item">
-            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Otay">
+            <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg" role="img" aria-label="Sucursal Otay">
                 <defs>
                     <clipPath id="sucursalClip2">
                         <circle cx="110" cy="110" r="75" />
                     </clipPath>
-                    <path id="sucursalPath2"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                    <path id="sucursalPath2" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
                 </defs>
-                <image href="{{ asset('images/otay.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#sucursalClip2)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#sucursalPath2" startOffset="20%" text-anchor="middle">
+
+                <image href="{{ asset('images/otay.png') }}"
+                    x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip2)" />
+
+                <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                      font-size="14" fill="#4a4a4a" font-weight="700">
+                    <textPath href="#sucursalPath2" startOffset="25%" text-anchor="middle">
                         Otay
                     </textPath>
                 </text>
             </svg>
         </div>
         <div class="sucursal-item">
-            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Centro">
+            <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg" role="img" aria-label="Sucursal Centro">
                 <defs>
                     <clipPath id="sucursalClip3">
                         <circle cx="110" cy="110" r="75" />
                     </clipPath>
-                    <path id="sucursalPath3"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                    <path id="sucursalPath3" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
                 </defs>
-                <image href="{{ asset('images/centro.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#sucursalClip3)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#sucursalPath3" startOffset="20%" text-anchor="middle">
+
+                <image href="{{ asset('images/centro.png') }}"
+                    x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip3)" />
+
+                <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                      font-size="14" fill="#4a4a4a" font-weight="700">
+                    <textPath href="#sucursalPath3" startOffset="25%" text-anchor="middle">
                         Centro
                     </textPath>
                 </text>
             </svg>
         </div>
         <div class="sucursal-item">
-            <svg viewBox="0 0 220 220" class="sucursal-svg" role="img" aria-label="Sucursal Playas">
+            <svg viewBox="-28 -28 276 276" overflow="visible" preserveAspectRatio="xMidYMid meet" class="beneficio-svg" role="img" aria-label="Sucursal Playas">
                 <defs>
                     <clipPath id="sucursalClip4">
                         <circle cx="110" cy="110" r="75" />
                     </clipPath>
-                    <path id="sucursalPath4"
-                        d="M110,110 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+                    <path id="sucursalPath4" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" />
                 </defs>
-                <image href="{{ asset('images/playas.png') }}" x="35" y="35" width="150" height="150"
-                    clip-path="url(#sucursalClip4)" preserveAspectRatio="xMidYMid slice" />
-                <text font-family="Poppins, sans-serif" font-size="14" fill="#4a4a4a" font-weight="600">
-                    <textPath href="#sucursalPath4" startOffset="20%" text-anchor="middle">
+
+                <image href="{{ asset('images/playas.png') }}"
+                    x="35" y="35" width="150" height="150"
+                    clip-path="url(#sucursalClip4)" />
+
+                <text text-rendering="geometricPrecision" font-family="BrandonGrotesque, sans-serif"
+                      font-size="14" fill="#4a4a4a" font-weight="700">
+                    <textPath href="#sucursalPath4" startOffset="25%" text-anchor="middle">
                         Playas
                     </textPath>
                 </text>
@@ -1205,28 +1267,40 @@
 
 
   
-    <section class="contact-section">
+    <section id="contacto" class="contact-section">
 
     <div class="contact-card">
 
         <h2 class="contact-title">Queremos conocerte</h2>
+
+        @if (session('ok'))
+            <div class="alert-ok">{{ session('ok') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert-err">
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('contact.submit') }}">
             @csrf
 
             <div class="contact-row">
                 <label>Nombre:</label>
-                <input type="text" name="nombre" class="contact-input" required>
+                <input type="text" name="nombre" class="contact-input" value="{{ old('nombre') }}" required>
             </div>
 
             <div class="contact-row">
                 <label>Correo Electrónico:</label>
-                <input type="email" name="correo" class="contact-input" required>
+                <input type="email" name="correo" class="contact-input" value="{{ old('correo') }}" required>
             </div>
 
             <div class="contact-row">
                 <label>Número de Teléfono:</label>
-                <input type="text" name="telefono" class="contact-input" required>
+                <input type="text" name="telefono" class="contact-input" value="{{ old('telefono') }}" required>
             </div>
 
             <div class="contact-row align-top">
@@ -1235,25 +1309,25 @@
                 <div class="contact-radio-wrapper single-row">
 
                     <label class="radio-option">
-                        <input type="radio" name="opcion" value="Solicitar información" required>
+                        <input type="radio" name="opcion" value="Solicitar información" {{ old('opcion') === 'Solicitar información' ? 'checked' : '' }} required>
                         <span class="custom-check"></span>
                         Solicitar información:
                     </label>
 
                     <label class="radio-option">
-                        <input type="radio" name="opcion" value="Agendar cita">
+                        <input type="radio" name="opcion" value="Agendar cita" {{ old('opcion') === 'Agendar cita' ? 'checked' : '' }}>
                         <span class="custom-check"></span>
                         Agendar cita:
                     </label>
 
                     <label class="radio-option">
-                        <input type="radio" name="opcion" value="Consultar promociones">
+                        <input type="radio" name="opcion" value="Consultar promociones" {{ old('opcion') === 'Consultar promociones' ? 'checked' : '' }}>
                         <span class="custom-check"></span>
                         Consultar promociones:
                     </label>
 
                     <label class="radio-option">
-                        <input type="radio" name="opcion" value="Otros">
+                        <input type="radio" name="opcion" value="Otros" {{ old('opcion') === 'Otros' ? 'checked' : '' }}>
                         <span class="custom-check"></span>
                         Otros:
                     </label>
@@ -1263,7 +1337,7 @@
 
             <div class="contact-row align-top">
                 <label>Mensaje o Consulta:</label>
-                <textarea name="mensaje" class="contact-textarea"></textarea>
+                <textarea name="mensaje" class="contact-textarea">{{ old('mensaje') }}</textarea>
             </div>
 
             <div class="contact-button-wrapper">

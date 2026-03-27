@@ -115,4 +115,8 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'contact_to' => [
+        'address' => env('CONTACT_FORM_TO_EMAIL', 'piotroskiangeles@gmail.com'),
+    ],
+
 ];
