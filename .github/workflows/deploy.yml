@@ -23,8 +23,8 @@ jobs:
           composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
           # Solo copia .env.example si no existe .env
-          cp .env.example .env
           if [ ! -f .env ]; then
+            cp .env.example .env
             php artisan key:generate
           fi
 
