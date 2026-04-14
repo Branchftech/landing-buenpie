@@ -1,0 +1,45 @@
+name: Deploy AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Deploy directo en servidor
+        run: |
+          cd /var/www/buenpie
+
+          # Fix permisos ANTES del git para que pueda hacer reset
+          sudo chown -R admin:admin storage bootstrap/cache
+
+          git fetch origin
+          git reset --hard origin/main
+
+          composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+          # Solo copia .env.example si no existe .env
+          if [ ! -f .env ]; then
+            cp .env.example .env
+            php artisan key:generate
+          fi
+
+          php artisan config:clear
+          php artisan cache:clear
+          php artisan route:clear
+          php artisan view:clear
+
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+
+          # Devuelve permisos a www-data para Apache
+          sudo chown -R www-data:www-data storage bootstrap/cache
+          sudo chmod -R 775 storage bootstrap/cache
+
+          sudo systemctl reload apache2
